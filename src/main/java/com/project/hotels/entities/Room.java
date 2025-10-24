@@ -64,4 +64,13 @@ public class Room {
     @Size(min = 3, max = 3) @Column(length = 3, nullable = false)
     private String currency = "EUR";
 
+    public enum RoomStatus {
+        AVAILABLE, MAINTENANCE, OCCUPIED, RESERVED
+    }
+
+    public enum RoomType {
+        VIP, STANDARD, DORM_BED
+    }
+
+
 }
