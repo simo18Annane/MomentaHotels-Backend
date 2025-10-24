@@ -11,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinTable;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -51,7 +50,7 @@ public class Hotel {
     @Min(0) @Max(5) @Column(nullable = false)
     private Integer stars;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String description;
     
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
