@@ -25,6 +25,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//pour configurer la table SQL associée à l'entité Hotel
+//@Index permet de créer des index en bdd sur les colonnes city et country pour optimiser les recherches
+//sans index, les recherches sur ces colonnes seraient plus lentes, surtout avec un grand volume de données
+//avec index, les performances des requêtes de recherche sont améliorées
 @Table(name = "hotel", indexes = {
     @Index(name = "idx_hotel_city", columnList = "city"),
     @Index(name = "idx_hotel_country", columnList = "country")
@@ -53,6 +57,11 @@ public class Hotel {
     @Column(columnDefinition = "TEXT")
     private String description;
     
+    //un hotel peut avoir plusieurs chambres, chaque chambre appartient à un seul hotel
+    //la colonne hotel_id dans la table room fait référence à l'id de l'hotel, mappedBy indique que l'association est gérée par l'entité Room et évite une table de jointure supplémentaire
+    //cascade ALL pour propager les opérations de persistance de l'hôtel aux chambres associées (ex: si un hôtel est supprimé, ses chambres le sont aussi)
+    //orphanRemoval true pour supprimer automatiquement les chambres orphelines (chambres dissociées d'un hôtel)
+    //initialisation de la liste pour éviter les NullPointerException lors de l'ajout de chambres
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms = new ArrayList<>();
 
@@ -62,4 +71,7 @@ public class Hotel {
         joinColumns = @jakarta.persistence.JoinColumn(name = "hotel_id"), 
         inverseJoinColumns = @jakarta.persistence.JoinColumn(name = "service_id"))
     private List<Service> services = new ArrayList<>();
+
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ImageHotel> images = new ArrayList<>();
 }

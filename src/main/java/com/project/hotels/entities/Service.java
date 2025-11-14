@@ -32,6 +32,7 @@ public class Service {
     @NotBlank @Column(nullable = false)
     private String name;
 
+    //correspond à la relation ManyToMany définie dans l'entité Hotel
     @ManyToMany(mappedBy = "services")
     private List<Hotel> hotels = new ArrayList<>();
 

@@ -28,6 +28,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//uniqueConstraints indique que la combinaison des colonnes hotel_id et room_number doit être unique dans la table room
 @Table(name = "room", uniqueConstraints = @UniqueConstraint(name = "uk_room_hotel_roomnumber", columnNames = {"hotel_id", "room_number"}),
         indexes = {
             @Index(name = "idx_room_hotel_type", columnList = "hotel_id, room_type"),
@@ -39,6 +40,12 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //optional = false signifie qu'une chambre doit toujours être associée à un hôtel
+    //LAZY pour indiquer que l'association doit être chargée à la demande (lazy loading) avec getHotel()
+    //EAGER chargerait automatiquement l'hôtel à chaque chargement de la chambre, ce qui peut être inefficace
+    //name = "hotel_id" pour nommer explicitement la colonne de jointure dans la table room
+    //nullable = false pour indiquer que cette colonne ne peut pas être nulle
+    //foreignKey pour nommer la contrainte de clé étrangère dans la base de données
     @ManyToOne(optional = false, fetch = FetchType.LAZY) //je peux charger l'association hotel à la demande avec getHotel()
     @JoinColumn(name = "hotel_id", nullable = false, foreignKey = @ForeignKey(name = "fk_room_hotel"))
     private Hotel hotel;
