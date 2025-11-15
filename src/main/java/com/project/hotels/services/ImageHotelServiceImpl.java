@@ -18,12 +18,16 @@ public class ImageHotelServiceImpl implements ImageHotelService {
     @Autowired
     private ImageHotelRepository imageHotelRepository;
 
+    @Autowired
+    private HotelService hotelService;
+
     @Override
-    public ImageHotel saveImageHotel(MultipartFile file) throws IOException {
+    public ImageHotel saveImageHotel(MultipartFile file, Long hotelId) throws IOException {
         return imageHotelRepository.save(ImageHotel.builder()
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
                 .data(file.getBytes())
+                .hotel(hotelService.getHotelById(hotelId))
                 .build());
     }
 

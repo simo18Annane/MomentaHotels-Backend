@@ -9,7 +9,7 @@ import com.project.hotels.entities.ImageHotel;
 
 public interface ImageHotelService {
 
-    ImageHotel saveImageHotel(MultipartFile file) throws IOException;
+    ImageHotel saveImageHotel(MultipartFile file, Long hotelId) throws IOException;
     ImageHotel getImageHotelDetailsById(Long id) throws IOException;
     ResponseEntity<byte[]> getImageHotelById(Long id) throws IOException;
     void deleteImageHotel(Long id);

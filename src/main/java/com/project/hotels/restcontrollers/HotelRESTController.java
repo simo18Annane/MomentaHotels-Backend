@@ -26,6 +26,7 @@ public class HotelRESTController {
 
     @PostMapping("/addHotel")
     public Hotel createHotel(@RequestBody Hotel hotel) {
+        System.out.println("Received hotel: " + hotel);
         return hotelService.saveHotel(hotel);
     }
 
